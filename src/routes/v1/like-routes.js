@@ -1,10 +1,10 @@
 const express = require('express');
 
 const { LikeController } = require('../../controllers');
-const { authenticate } = require('../../middlewares/authenticate');
+const { isLoggedIn } = require('../../middlewares/auth-middleware');
 
 const router = express.Router();
 
-router.post('/toggle/:modelType/:modelId', authenticate, LikeController.toggleLike);
+router.post('/toggle/:modelType/:modelId', isLoggedIn, LikeController.toggleLike);
 
 module.exports = router;
