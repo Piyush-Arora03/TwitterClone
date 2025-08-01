@@ -20,6 +20,22 @@ async function createTweet(req, res) {
     }
 }
 
+async function deleteTweet(req, res) {
+    try {
+        const reponse=await TweetService.delete(req.params.id);
+        const successResponse = { ...SuccessResponse, data: reponse };
+        return res
+                .status(StatusCodes.OK)
+                .json(successResponse);
+    } catch (error) {
+        const errorResponse = { ...ErrorResponse, error: error };
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
+
 module.exports = {
-    createTweet
+    createTweet,
+    deleteTweet
 }

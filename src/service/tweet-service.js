@@ -22,6 +22,14 @@ class TweetService {
             throw new Error('Error creating tweet: ' + error.message);
         }
     }
+    async delete(tweetId){
+        try {
+            const response=await this.tweetRepository.destroy(tweetId);
+            return response; 
+        } catch (error) {
+            throw new Error('Error deleting tweet: ' + error.message);
+        }
+    }
 }
 
 module.exports =new TweetService();

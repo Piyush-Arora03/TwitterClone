@@ -49,6 +49,7 @@ class UserService {
             throw new AppError('Something went wrong', StatusCodes.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
 
 module.exports = new UserService();

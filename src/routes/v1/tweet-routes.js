@@ -1,10 +1,11 @@
 const express = require('express');
 
 const { TweetController } = require('../../controllers');
-const { authenticate } = require('../../middlewares/authenticate');
+const { isLoggedIn } = require('../../middlewares/auth-middleware');
 
 const router = express.Router();
 
-router.post('/', authenticate, TweetController.createTweet);
+router.post('/', isLoggedIn, TweetController.createTweet);
+router.get('/:id', isLoggedIn, TweetController.deleteTweet);
 
 module.exports = router;

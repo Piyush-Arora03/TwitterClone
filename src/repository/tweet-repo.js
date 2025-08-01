@@ -12,7 +12,7 @@ class TweetRepository {
 
     async getById(id) {
         try {
-            const tweet = await Tweet.findById(id).populate('user').populate({path:'comments'});
+            const tweet = await Tweet.findById(id).populate('user').populate({path:'comments',});
             return tweet;
         } catch (error) {
             throw new Error('Error finding tweet: ' + error.message);
