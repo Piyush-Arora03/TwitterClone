@@ -1,48 +1,59 @@
-class CurdRepository{
-    constructor(mdoel){
-        this.mdoel=mdoel;
+const logger = require('../config/logger');
+
+class CrudRepository {
+    constructor(model) {
+        this.model = model;
     }
 
-    async get(id){
+    async get(id) {
         try {
-            const response=await this.mdoel.findById(id);
-            return response;
+            const result = await this.model.findById(id);
+            return result;
         } catch (error) {
+            logger.error("Something went wrong in the Crud Repository: get", { error });
             throw error;
         }
     }
-    async getAll(){
+
+    async getAll() {
         try {
-            const response=await this.mdoel.find({});
-            return response;
-        }catch(error){
+            const result = await this.model.find({});
+            return result;
+        } catch (error) {
+            logger.error("Something went wrong in the Crud Repository: getAll", { error });
             throw error;
         }
     }
-    async create(data){
+
+    async create(data) {
         try {
-            const response=await this.mdoel.create(data);
-            return response;
-        }catch(error){
+            const result = await this.model.create(data);
+            return result;
+        } catch (error) {
+            logger.error("Something went wrong in the Crud Repository: create", { error });
             throw error;
         }
     }
-    async update(id,data){
+
+    async update(id, data) {
         try {
-            const response=await this.mdoel.findByIdAndUpdate(id,data,{new:true});
-            return response;
-        }catch(error){
+            const result = await this.model.findByIdAndUpdate(id, data, { new: true });
+            return result;
+        } catch (error) {
+            logger.error("Something went wrong in the Crud Repository: update", { error });
             throw error;
         }
     }
-    async destroy(id){
+
+    async destroy(id) {
         try {
-            const response=await this.mdoel.findByIdAndDelete(id);
-            return response;
-        }catch(error){
+            const result = await this.model.findByIdAndDelete(id);
+            return result;
+        } catch (error) {
+            logger.error("Something went wrong in the Crud Repository: destroy", { error });
             throw error;
         }
     }
 }
 
-module.exports=CurdRepository
+module.exports = CrudRepository;

@@ -1,4 +1,5 @@
 const { Hashtag } = require('../models/index');
+const logger = require('../config/logger');
 
 class HashtagRepository {
     constructor() {
@@ -10,7 +11,7 @@ class HashtagRepository {
             const tags = await this.hashtagModel.insertMany(data);
             return tags;
         } catch (error) {
-            console.log(error);
+            logger.error('Something went wrong in the Hashtag Repository: bulkCreate', { error });
             throw error;
         }
     }
@@ -22,7 +23,8 @@ class HashtagRepository {
             }).hint({ content: 1 });
             return tags;
         } catch (error) {
-            console.log(error);
+            logger.error('Something went wrong in the Hashtag Repository: findByName', { error });
+            throw error;
         }
     }
 }

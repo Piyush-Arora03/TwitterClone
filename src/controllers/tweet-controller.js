@@ -13,10 +13,10 @@ async function createTweet(req, res) {
                 .status(StatusCodes.CREATED)
                 .json(SuccessResponse);
     } catch(error) {
-        ErrorResponse.error = error;
+        const errorResponse = { ...ErrorResponse, error: error };
         return res
-                .status(error.statusCode)
-                .json(ErrorResponse);
+                .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+                .json(errorResponse);
     }
 }
 
@@ -30,8 +30,8 @@ async function deleteTweet(req, res) {
     } catch (error) {
         const errorResponse = { ...ErrorResponse, error: error };
         return res
-                .status(error.statusCode)
-                .json(ErrorResponse);
+                .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+                .json(errorResponse);
     }
 }
 

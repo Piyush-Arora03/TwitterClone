@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const CrudRepository = require('./curd-repository');
+const logger = require('../config/logger');
 
 class UserRepository extends CrudRepository {
     constructor() {
@@ -8,10 +9,11 @@ class UserRepository extends CrudRepository {
 
     async getUserByEmail(email) {
         try {
-            const user = await User.findOne({email: email});
+            const user = await User.findOne({ email: email });
             return user;
         } catch (error) {
-            throw new Error('Error finding user: ' + error.message);
+            logger.error('Something went wrong in the User Repository: getUserByEmail', { error });
+            throw error;
         }
     }
 }

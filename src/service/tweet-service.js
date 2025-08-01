@@ -1,5 +1,6 @@
 const { TweetRepository } = require('../repository');
 const HashtagService = require('./hashtag-service');
+const logger = require('../config/logger');
 
 class TweetService {
     constructor() {
@@ -19,15 +20,17 @@ class TweetService {
             });
             return tweet;
         } catch (error) {
-            throw new Error('Error creating tweet: ' + error.message);
+            logger.error('Error in TweetService: create', { error });
+            throw error;
         }
     }
     async delete(tweetId){
         try {
             const response=await this.tweetRepository.destroy(tweetId);
-            return response; 
+            return response;
         } catch (error) {
-            throw new Error('Error deleting tweet: ' + error.message);
+            logger.error('Error in TweetService: delete', { error });
+            throw error;
         }
     }
 }

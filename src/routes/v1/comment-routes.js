@@ -1,10 +1,10 @@
 const express = require('express');
 
 const { CommentController } = require('../../controllers');
-const { authenticate } = require('../../middlewares/authenticate');
+const { isLoggedIn } = require('../../middlewares/auth-middleware');
 
 const router = express.Router();
 
-router.post('/:tweetId', authenticate, CommentController.createComment);
+router.post('/:tweetId', isLoggedIn, CommentController.createComment);
 
 module.exports = router;

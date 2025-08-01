@@ -1,4 +1,6 @@
+const { use } = require('passport');
 const { CommentRepository, TweetRepository } = require('../repository');
+const logger = require('../config/logger');
 
 class CommentService {
     constructor() {
@@ -7,17 +9,21 @@ class CommentService {
     }
 
     async create(userId, tweetId, content) {
-        const comment = await this.commentRepository.create({
-            user: userId,
-            tweet: tweetId,
-            content: content
-        });
+        try {
+            const comment = await this.commentRepository.create({
+                user: userId,
+                tweet: tweetId,
+                content: content
+            });
 
-        const tweet = await this.tweetRepository.get(tweetId);
-        tweet.comments.push(comment._id);
-        await tweet.save();
-
-        return comment;
+            const tweet = await this.tweetRepository.get(tweetId);
+            tweet.comments.push(comment._id);
+            await tweet.save();
+            return comment;
+        } catch (error) {
+            logger.error('Error in CommentService: create', { error });
+            throw error;
+        }
     }
 }
 

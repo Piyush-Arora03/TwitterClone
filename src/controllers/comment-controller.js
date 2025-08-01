@@ -16,7 +16,7 @@ async function createComment(req, res) {
     } catch(error) {
         ErrorResponse.error = error;
         return res
-                .status(error.statusCode)
+                .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
                 .json(ErrorResponse);
     }
 }

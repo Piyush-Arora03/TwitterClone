@@ -1,22 +1,23 @@
 const {Like}=require('../models/index');
 const CurdRepository=require('./curd-repository');
+const logger = require('../config/logger');
 
 class LikeRepository extends CurdRepository{
     constructor(){
         super(Like);
     }
     
-    async findByUserAndLikable(data){
+    async findByUserAndLikable(data) {
         try {
-            const response=await this.mdoel.findOne({
-                where:{
-                    likable:data.modelType,
-                    user:data.user
-                }
+            const response = await this.model.findOne({
+                user: data.user,
+                onModel: data.onModel,
+                likable: data.likable
             });
             return response;
         } catch (error) {
-            throw new Error('Error getting data in like repository'+error.message);
+            logger.error('Something went wrong in the Like Repository: findByUserAndLikable', { error });
+            throw error;
         }
     }
 }

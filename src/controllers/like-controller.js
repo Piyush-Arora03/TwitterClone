@@ -14,10 +14,10 @@ async function toggleLike(req, res) {
                 .status(StatusCodes.OK)
                 .json(SuccessResponse);
     } catch(error) {
-        ErrorResponse.error = error;
+        const errorResponse = { ...ErrorResponse, error: error };
         return res
-                .status(error.statusCode)
-                .json(ErrorResponse);
+                .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+                .json(errorResponse);
     }
 }
 

@@ -4,7 +4,6 @@ const { SuccessResponse, ErrorResponse } = require('../utils/common');
  
 async function createUser(req, res) {
     try {
-        console.log('in req');
         const user = await UserService.createUser({
             email: req.body.email,
             password: req.body.password,
@@ -16,7 +15,6 @@ async function createUser(req, res) {
                 .status(StatusCodes.CREATED)
                 .json(successResponse);
     } catch(error) {
-        console.error("ERROR in createUser controller: ", error); // Add this line to see the error
         const errorResponse = { ...ErrorResponse, error: error };
         return res
                 .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
@@ -35,7 +33,6 @@ async function signin(req, res) {
                 .status(StatusCodes.OK)
                 .json(successResponse);
     } catch(error) {
-        console.error("ERROR in signin controller: ", error);
         const errorResponse = { ...ErrorResponse, error: error };
         return res
                 .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)

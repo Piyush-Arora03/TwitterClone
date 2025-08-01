@@ -3,7 +3,11 @@ const AppError = require('../utils/errors/app-error');
 const { ErrorResponse } = require('../utils/common');
 const { verifyToken } = require('../utils/common/auth');
 const { UserService } = require('../service');
-const { UserRepository }=require('../repository');
+const { UserRepository } = require('../repository');
+const logger = require('../config/logger');
+
+const userRepository = new UserRepository();
+
 async function isLoggedIn(req, res, next) {
     try {
         if (!req.headers.authorization) {
@@ -14,8 +18,7 @@ async function isLoggedIn(req, res, next) {
             throw new AppError('JWT token missing', StatusCodes.BAD_REQUEST);
         }
         const decoded = verifyToken(token);
-        this.userRepository = new UserRepository();
-        const user = await this.userRepository.get(decoded.id);
+        const user = await userRepository.get(decoded.id);
         if (!user) {
             throw new AppError('No user found for the corresponding token', StatusCodes.UNAUTHORIZED);
         }
@@ -32,6 +35,7 @@ async function isLoggedIn(req, res, next) {
         if (!(error instanceof AppError)) {
             error = new AppError('Something went wrong during authentication', StatusCodes.INTERNAL_SERVER_ERROR);
         }
+        logger.error('Authentication Error', { error: { name: error.name, message: error.message, statusCode: error.statusCode } });
         ErrorResponse.error = error;
         return res.status(error.statusCode).json(ErrorResponse);
     }
@@ -40,4 +44,3 @@ async function isLoggedIn(req, res, next) {
 module.exports = {
     isLoggedIn
 }
-

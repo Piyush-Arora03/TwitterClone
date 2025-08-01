@@ -1,4 +1,5 @@
 const { HashtagRepository } = require('../repository');
+const logger = require('../config/logger');
 
 class HashtagService {
     constructor() {
@@ -8,7 +9,7 @@ class HashtagService {
     async create(data) {
         try {
             const content = data.content;
-            let tags = content.match(/#[a-zA-Z0-9_]+/g); 
+            let tags = content.match(/#[a-zA-Z0-9_]+/g);
             if(tags) {
                 tags = tags.map((tag) => tag.substring(1).toLowerCase());
                 let alreadyPresentTags = await this.hashtagRepository.findByName(tags);
@@ -24,8 +25,8 @@ class HashtagService {
                 });
             }
         } catch (error) {
-            console.log(error);
-            throw new Error('Error creating hashtags: ' + error.message);
+            logger.error('Error in HashtagService: create', { error });
+            throw error;
         }
     }
 }
