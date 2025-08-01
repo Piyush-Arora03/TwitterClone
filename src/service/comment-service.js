@@ -1,14 +1,19 @@
-const { comment_repo, tweet_repo } = require('../repository');
+const { CommentRepository, TweetRepository } = require('../repository');
 
 class CommentService {
+    constructor() {
+        this.commentRepository = new CommentRepository();
+        this.tweetRepository = new TweetRepository();
+    }
+
     async create(userId, tweetId, content) {
-        const comment = await comment_repo.create({
+        const comment = await this.commentRepository.create({
             user: userId,
             tweet: tweetId,
             content: content
         });
 
-        const tweet = await tweet_repo.getById(tweetId);
+        const tweet = await this.tweetRepository.get(tweetId);
         tweet.comments.push(comment._id);
         await tweet.save();
 
@@ -16,4 +21,4 @@ class CommentService {
     }
 }
 
-module.exports = CommentService;
+module.exports =new CommentService();

@@ -1,5 +1,7 @@
-module.exports={
-    comment_service:require('./comment-service'),
-    TweetService:require('./tweet-service'),
-    HashtagService:require('./hashtag-service')
+module.exports = {
+    UserService: require('./user-service'),
+    LikeService: require('./like-service'),
+    TweetService: require('./tweet-service'),
+    CommentService: require('./comment-service'),
+    HashtagService: require('./hashtag-service')
 }

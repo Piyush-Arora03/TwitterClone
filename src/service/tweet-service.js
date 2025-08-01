@@ -1,19 +1,19 @@
-const { tweet_repo } = require('../repository');
+const { TweetRepository } = require('../repository');
 const HashtagService = require('./hashtag-service');
 
 class TweetService {
     constructor() {
-        this.tweet_repo = new tweet_repo();
-        this.hashtag_service = new HashtagService();
+        this.tweetRepository = new TweetRepository();
+        this.hashtagService = new HashtagService();
     }
 
     async create(userId, content) {
         try {
-            const tweet = await this.tweet_repo.create({
+            const tweet = await this.tweetRepository.create({
                 user: userId,
                 content: content
             });
-            await this.hashtag_service.create({
+            await this.hashtagService.create({
                 content: content,
                 tweetId: tweet._id
             });
@@ -24,4 +24,4 @@ class TweetService {
     }
 }
 
-module.exports = TweetService;
+module.exports =new TweetService();

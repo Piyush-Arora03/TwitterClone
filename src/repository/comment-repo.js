@@ -1,12 +1,10 @@
 const Comment = require('../models/comment');
+const CrudRepository = require('./curd-repository');
 
-const create = async (data) => {
-    try {
-        const comment = await Comment.create(data);
-        return comment;
-    } catch (error) {
-        throw new Error('Error creating comment: ' + error.message);
+class CommentRepository extends CrudRepository {
+    constructor() {
+        super(Comment);
     }
-};
+}
 
-module.exports = { create };
+module.exports = CommentRepository;

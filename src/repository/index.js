@@ -1,6 +1,8 @@
-module.exports={
-    comment_repo:require('./comment-repo'),
-    user_repo:require('./user-repo'),
-    tweet_repo:require('./tweet-repo'),
-    hashtag_repo:require('./hashtag-repo')
+module.exports = {
+    UserRepository: require('./user-repo'),
+    LikeRepository: require('./like-repository'),
+    TweetRepository: require('./tweet-repo'),
+    CommentRepository: require('./comment-repo'),
+    HashtagRepository: require('./hashtag-repo'),
+    CrudRepository: require('./curd-repository')
 }

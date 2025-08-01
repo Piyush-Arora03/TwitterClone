@@ -1,6 +1,7 @@
-module.exports= {
-    Hashtag: require('../models/hashtag'),
-    Tweet: require('../models/tweet'),
-    User: require('../models/user'),
-    Comment: require('../models/comment')
-};
+module.exports = {
+    User: require('./user'),
+    Like: require('./like'),
+    Tweet: require('./tweet'),
+    Comment: require('./comment'),
+    Hashtag: require('./hashtag')
+}
